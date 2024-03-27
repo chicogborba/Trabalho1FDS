@@ -6,7 +6,8 @@ public class Gerente {
     FabricaProduto.criarProdutoIndividual(nome, preco, id);
   }
 
-  public void criaCombo(String nome, double preco, int id, List<Produto> filhos, int desconto) {
-    FabricaProduto.criarCombo(nome, preco, id, filhos, desconto);
+  public void criaCombo(String nome, int id, List<Integer> IdsDosfilhos, int desconto) {
+
+    FabricaProduto.criarCombo(nome, id, IdsDosfilhos, desconto);
   }
 }

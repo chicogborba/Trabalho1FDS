@@ -1,18 +1,28 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) {
+
+    // ------------------------------------------------------------------------------
+    // ADICIONANDO ITENS AO MENU
+    // ------------------------------------------------------------------------------
+
     Gerente gerente = new Gerente();
+    List<Integer> produtosComboSolo = List.of(1, 2, 5);
+    List<Integer> produtosComboFml = List.of(6, 6, 6, 6);
     gerente.criaProdutoIndividual("Coca-Cola", 5.0, 1);
     gerente.criaProdutoIndividual("Pepsi", 4.0, 2);
     gerente.criaProdutoIndividual("Hamburger Costela", 32.0, 2);
     gerente.criaProdutoIndividual("Hamburger Frango", 25.0, 3);
     gerente.criaProdutoIndividual("Hamburger Vegetariano", 30.0, 4);
     gerente.criaProdutoIndividual("Batata Frita", 15.0, 5);
+    gerente.criaCombo("combo solo", 6, produtosComboSolo, 10);
+    gerente.criaCombo("combo familia", 7, produtosComboFml, 10);
 
-    ListaProdutos lista = ListaProdutos.getInstancia();
-
-    // for (Produto produto : lista.getLista()) {
+    // ------------------------------------------------------------------------------
+    // SISTEMA DE TERMINAL
+    // ------------------------------------------------------------------------------
 
     // Escolher se o usuario é gerente ou cliente pelo terminal e scanner
     System.out.println("Digite 1 para usar o sistema como gerente e 2 para cliente");
@@ -36,11 +46,12 @@ public class App {
     Scanner scanner = new Scanner(System.in);
     while (!sair) {
       System.out.println(
-          "Digite 1 para criar um produto, 2 para remover um produto, 3 para visualizar a lista de produtos e 4 para sair");
+          "Digite 1 para criar um produto, 2 para remover um produto, 3 para visualizar a lista de produtos, 4 para criar um combo e 5 para sair");
       int opcao = scanner.nextInt();
       if (opcao == 1) {
         System.out.println("Digite o nome do produto");
-        String nome = scanner.next();
+        scanner.nextLine();
+        String nome = scanner.nextLine();
         System.out.println("Digite o preço do produto");
         double preco = scanner.nextDouble();
         System.out.println("Digite o id do produto");
@@ -56,6 +67,23 @@ public class App {
         ListaProdutos lista = ListaProdutos.getInstancia();
         System.out.println(lista.toString());
       } else if (opcao == 4) {
+        System.out.println("Digite o nome do combo");
+        scanner.nextLine();
+        String nome = scanner.nextLine();
+        System.out.println("Digite o id do combo");
+        int id = scanner.nextInt();
+        System.out.println("Digite o id dos produtos que compõem o combo separados por espaço");
+        scanner.nextLine();
+        String ids = scanner.nextLine();
+        System.out.println("Digite o desconto do combo");
+        int desconto = scanner.nextInt();
+        Gerente gerente = new Gerente();
+
+        // Transforma a string de ids em uma lista de inteiros
+        List<Integer> idsFilhos = List.of(ids.split(" ")).stream().map(Integer::parseInt).toList();
+
+        gerente.criaCombo(nome, id, idsFilhos, desconto);
+      } else if (opcao == 5) {
         sair = true;
       } else {
         System.out.println("Opção inválida");

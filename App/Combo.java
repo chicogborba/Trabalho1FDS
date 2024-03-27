@@ -37,8 +37,11 @@ public class Combo implements Produto {
   }
 
   public String toString() {
-    return nome + " - " + preço + "\n"
-        + filhos.stream().map(filho -> "\t- " + filho.getName()).reduce("", (a, b) -> a + b);
+    return "id:" + id + "  "
+        + nome + " - " + preço + "\n"
+        + filhos.stream()
+            .map(filho -> " ".repeat(2) + "->" + filho.getName() + "\n")
+            .reduce("", (a, b) -> a + b);
   }
 
 }
